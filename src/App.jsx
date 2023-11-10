@@ -114,7 +114,7 @@ const App = ()=>{
     // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
     // pay with  Native tokens: transaction userOp
-    const nativeFeeQuotes = feeQuotesResult.verifyingPaymasterGasless["feeQuote"];
+    const nativeFeeQuotes = feeQuotesResult.verifyingPaymasterNative["feeQuote"];
     //const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
 
     // pay with ERC-20 tokens: fee quotes
