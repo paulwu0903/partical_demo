@@ -99,7 +99,11 @@ const App = ()=>{
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
 
+    console.log(`user op: ${userOp}`)
+    console.log(`user op hash: ${userOpHash}`)
+
     const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
+    txHash.wait();
     console.log('Transaction hash: ', txHash);
 
 
