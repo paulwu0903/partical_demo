@@ -92,21 +92,21 @@ const App = ()=>{
     // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
 
     // build user operation, feeQuote and tokenPaymasterAddress is optional.
-    const userOpBundle = await smartAccount.buildUserOperation({txs});
-    const userOp = userOpBundle.userOp;
-    const userOpHash = userOpBundle.userOpHash;
+    // const userOpBundle = await smartAccount.buildUserOperation({txs, null, null});
+    // const userOp = userOpBundle.userOp;
+    // const userOpHash = userOpBundle.userOpHash;
 
-    console.log(`user op: ${userOp}`)
-    console.log(`user op hash: ${userOpHash}`)
+    // console.log(`user op: ${userOp}`)
+    // console.log(`user op hash: ${userOpHash}`)
 
-    const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
-    txHash.wait();
-    console.log('Transaction hash: ', txHash);
+    // const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
+    // txHash.wait();
+    // console.log('Transaction hash: ', txHash);
 
 
-    // const txResponse = await signer.sendTransaction(txs);
-    // const txReceipt = await txResponse.wait();
-    //console.log('Transaction hash: ', txReceipt.transactionHash);
+    const txResponse = await signer.sendTransaction(txs);
+    const txReceipt = await txResponse.wait();
+    console.log('Transaction hash: ', txReceipt.transactionHash);
   }
 
   return (
