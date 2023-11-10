@@ -100,11 +100,12 @@ const App = ()=>{
     const userOpHash = userOpBundle.userOpHash;
 
     const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
+    console.log('Transaction hash: ', txHash);
 
 
-    const txResponse = await signer.sendTransaction(txs);
-    const txReceipt = await txResponse.wait();
-    console.log('Transaction hash: ', txReceipt.transactionHash);
+    // const txResponse = await signer.sendTransaction(txs);
+    // const txReceipt = await txResponse.wait();
+    //console.log('Transaction hash: ', txReceipt.transactionHash);
   }
 
   return (
