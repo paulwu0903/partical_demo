@@ -69,7 +69,16 @@ const App = ()=>{
   }
 
   const executeUserOp = async ()=>{
-    const signer = customProvider.getSigner();
+    const tokenAddress = "0x93E79dFFae8F14e7f60f77c3be024D0276bB8110";
+    const nftAddress = "0x2bA1CE940FaC6E427c0df8b64E9814786E92A891";
+
+    const ERC20_ABI = require('./erc20Abi.json');
+    const ERC721_ABI = require('./erc721Abi.json');
+
+    const erc20 = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+    const erc721 = new ethers.Contract(nftAddress, ERC721_ABI, provider);
+    const amount = ethers.utils.parseUnits(tokenAmount, decimals_1);
+
     const txs = 
       [{
       to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
@@ -77,8 +86,16 @@ const App = ()=>{
       },{
         to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
         value : ethers.utils.parseEther('0.002'),
-      }]
-    ;
+      },{
+        to: tokenAddress,
+        data: erc20.interface.encodeFunctionData("mint", [amount]),
+      },{
+        to : tokenAddress,
+        data: erc20.interface.encodeFunctionData("transfer", ["0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf", amount])
+      },{
+        to: nftAddress,
+        data: erc721.interface.encodeFunctionData("publicMint", [3]),
+      }];
 
     // get fee quotes with tx or txs
     const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
@@ -103,7 +120,6 @@ const App = ()=>{
     console.log(`user op hash: ${userOpHash}`)
 
     const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
-    txHash.wait();
     console.log('Transaction hash: ', txHash);
 
 
