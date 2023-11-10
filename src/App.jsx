@@ -122,8 +122,8 @@ const App = ()=>{
     // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
 
     // build user operation, feeQuote and tokenPaymasterAddress is optional.
-    console.log(`paymaster: ${feeQuotesResult.tokenPaymaster}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    console.log(`paymaster: ${feeQuotesResult.tokenPaymaster.feeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult.tokenPaymaster.feeQuotes[0], tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
   
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
