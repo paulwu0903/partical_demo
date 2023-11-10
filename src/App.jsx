@@ -75,9 +75,19 @@ const App = ()=>{
     const ERC20_ABI = require('./erc20Abi.json');
     const ERC721_ABI = require('./erc721Abi.json');
 
+    const INFURA_ID = "803d8c704fb1402183256652496311e2";
+    const provider = new ethers.providers.JsonRpcProvider(`https://mainnet.infura.io/v3/${INFURA_ID}`);
+
+    
+
     const erc20 = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
     const erc721 = new ethers.Contract(nftAddress, ERC721_ABI, provider);
-    const amount = ethers.utils.parseUnits(tokenAmount, decimals_1);
+    const tokenAmount = "100";
+
+    const decimals = await erc20.decimals();
+    const amount = ethers.utils.parseUnits(tokenAmount, decimals);
+
+    
 
     const txs = 
       [{
@@ -98,7 +108,7 @@ const App = ()=>{
       }];
 
     // get fee quotes with tx or txs
-    const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
+    //const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
     // gasless transaction userOp, maybe null
     // const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
     // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
