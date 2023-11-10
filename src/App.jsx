@@ -77,7 +77,7 @@ const App = ()=>{
   return (
     <div className='App'>
       <div className='logos-section'>
-        <img src='https://lever-client-logos.s3.us-west-2.amazonaws.com/73c89f44-01ed-4d0a-9354-9661e253e4bf-1685457360524.png' alt='Biconomy Logo' className='biconomy-logo' />
+        <img src='https://i.imgur.com/HBfABYa.png' alt='Biconomy Logo' className='biconomy-logo' />
         <img src='https://i.imgur.com/2btL79J.png' alt='Particle Network Logo' className='particle-logo' />
       </div>
       <div>
