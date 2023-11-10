@@ -74,6 +74,9 @@ const App = ()=>{
       [{
       to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
       value : ethers.utils.parseEther('0.001'),
+      },{
+        to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+        value : ethers.utils.parseEther('0.002'),
       }]
     ;
 
@@ -92,21 +95,21 @@ const App = ()=>{
     // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
 
     // build user operation, feeQuote and tokenPaymasterAddress is optional.
-    // const userOpBundle = await smartAccount.buildUserOperation({txs, null, null});
-    // const userOp = userOpBundle.userOp;
-    // const userOpHash = userOpBundle.userOpHash;
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    const userOp = userOpBundle.userOp;
+    const userOpHash = userOpBundle.userOpHash;
 
-    // console.log(`user op: ${userOp}`)
-    // console.log(`user op hash: ${userOpHash}`)
+    console.log(`user op: ${userOp}`)
+    console.log(`user op hash: ${userOpHash}`)
 
-    // const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
-    // txHash.wait();
-    // console.log('Transaction hash: ', txHash);
+    const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
+    txHash.wait();
+    console.log('Transaction hash: ', txHash);
 
 
-    const txResponse = await signer.sendTransaction(txs);
-    const txReceipt = await txResponse.wait();
-    console.log('Transaction hash: ', txReceipt.transactionHash);
+    // const txResponse = await signer.sendTransaction(txs);
+    // const txReceipt = await txResponse.wait();
+    // console.log('Transaction hash: ', txReceipt.transactionHash);
   }
 
   return (
