@@ -70,16 +70,39 @@ const App = ()=>{
 
   const executeUserOp = async ()=>{
     const signer = customProvider.getSigner();
-    const tx = {
+    const txs = [
+      {
       to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
       value : ethers.utils.parseEther('0.001'),
-    };
+      },{
+      to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      value : ethers.utils.parseEther('0.002'),
+      }
+    ];
 
-    const txResponse = await signer.sendTransaction(tx);
+    // get fee quotes with tx or txs
+    const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
+    // gasless transaction userOp, maybe null
+    // const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
+    // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
+
+    // pay with  Native tokens: transaction userOp
+    // const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
+    // const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
+
+    // pay with ERC-20 tokens: fee quotes
+    // const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
+    // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
+
+    // build user operation, feeQuote and tokenPaymasterAddress is optional.
+    //const userOpBundle = await smartAccount.buildUserOperation({txs, feeQuotes});
+
+
+
+    const txResponse = await signer.sendTransaction(txs);
     const txReceipt = await txResponse.wait();
     console.log('Transaction hash: ', txReceipt.transactionHash);
-
-  };
+  }
 
   return (
     
