@@ -30,10 +30,11 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
       chainId: 5,
       version: '1.0.0',
     }],
-  },
-  networkConfig:[
-    { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: EthereumGoerli.id}
-  ]
+    paymasterApiKeys: [{
+      chainId: 1,
+      apiKey: 'E7dZKDcSX.599b8ee9-a5ee-45db-835d-446395eff164',
+  }]
+  }
 });
 
 
@@ -107,7 +108,7 @@ const App = ()=>{
       }];
 
     // get fee quotes with tx or txs
-    //const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
+    const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
     // gasless transaction userOp, maybe null
     // const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
     // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
@@ -121,7 +122,8 @@ const App = ()=>{
     // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
 
     // build user operation, feeQuote and tokenPaymasterAddress is optional.
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult.tokenPaymaster.feeQuote[0], tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
+    console.log(`paymaster: ${feeQuotesResult.tokenPaymaster}`);
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
 
