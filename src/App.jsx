@@ -23,6 +23,12 @@ const particle = new ParticleNetwork({
 
 const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   ...config,
+  aaOptions:{
+    biconomy: [{
+      chainId: 5,
+      version: '1.0.0',
+    }],
+  },
   networkConfig:[
     { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: EthereumGoerli.id}
   ]
