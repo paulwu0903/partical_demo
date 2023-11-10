@@ -4,8 +4,10 @@ import {ParticleProvider} from '@particle-network/provider';
 import { EthereumGoerli } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
+import { Flex, Image, Text, Button, Center, Box, Stack} from '@chakra-ui/react'
+import {RiTwitterXLine} from 'react-icons/ri';
+import {FaGoogle} from 'react-icons/fa';
 
-import './App.css';
 
 
 const config = {
@@ -41,7 +43,7 @@ particle.setERC4337(true);
 
 const App = ()=>{
   const [userInfo, setUserInfo] = useState(null);
-  const [ethBalance, setEthBalance] = useState(null);
+  const [ethBalance, setEthBalance] = useState();
 
   useEffect(() =>{
     if (userInfo){
@@ -51,7 +53,7 @@ const App = ()=>{
 
   const fetchEthBalance = async () =>{
     const address = await smartAccount.getAddress();
-    const balance = customProvider.getBalance(address);
+    const balance = await customProvider.getBalance(address);
     setEthBalance(ethers.utils.formatEther(balance));
 
   };
@@ -75,28 +77,40 @@ const App = ()=>{
   };
 
   return (
-    <div className='App'>
-      <div className='logos-section'>
-        <img src='https://i.imgur.com/HBfABYa.png' alt='Biconomy Logo' className='biconomy-logo' />
-        <img src='https://i.imgur.com/2btL79J.png' alt='Particle Network Logo' className='particle-logo' />
-      </div>
-      <div>
-        {!userInfo ? (
-          <div className='login-section'>
-            <button className='sign-button' onClick={() => handleLogin('google')}>Sign in with Google</button>
-            <button className='sign-button' onClick={()=> handleLogin('twitter')}>Sign in wth Twitter</button>
-          </div>
-        ): (
-          <div className='profile-card'>
-            <h2>{userInfo.name}</h2>
-            <div className='avax-section'>
-              <small>{ethBalance} ETH</small>
-              <button className='sign-message-button' onClick={executeUserOp}> Execute User Operation</button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    
+      <Stack>
+        <Center>
+          <Box>
+              <Flex className='App'>
+                <Flex className='logos-section'>
+                  <Image src='https://i.imgur.com/HBfABYa.png' alt='Biconomy Logo' className='biconomy-logo' />
+                  <Image src='https://i.imgur.com/2btL79J.png' alt='Particle Network Logo' className='particle-logo' />
+                </Flex>
+              </Flex>
+          </Box>
+      </Center>
+      <Center>
+        <Box>
+          <Flex>
+            {!userInfo ? (
+              <Flex className='login-section'>
+                <Button padding="16px" leftIcon={<FaGoogle />} bg="#F5F5F5" borderRadius="15px" variant="solid" size='lg' onClick={() => handleLogin('google')}>Sign in with Google</Button>
+                <Button  padding="16px" leftIcon={<RiTwitterXLine />} bg="#F5F5F5" borderRadius="15px" size='lg' onClick={()=> handleLogin('twitter')}>Sign in wth Twitter</Button>
+              </Flex>
+            ): (
+                <Box>
+                  <Flex>
+                    <Text fontSize='2xl'>{userInfo.name}&nbsp;:&nbsp;&nbsp; </Text>
+                    <Text fontSize='xl'>{ethBalance} ETH</Text>
+                  </Flex>
+                  <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOp}> Execute User Operation</Button>
+                </Box>
+            )}
+          </Flex>
+        </Box>
+      </Center>
+    </Stack>
+    
   );
 
 }
