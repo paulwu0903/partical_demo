@@ -46,6 +46,7 @@ const App = ()=>{
   const [caAddress, setCaAddress] = useState(null);
   const [eoaAddress, setEoaAddress] = useState(null);
   const [ethBalance, setEthBalance] = useState();
+  const [decimals, setDecimals] = useState(18);
 
   useEffect(() =>{
     if (userInfo){
@@ -84,7 +85,7 @@ const App = ()=>{
     const erc721 = new ethers.Contract(nftAddress, ERC721_ABI, provider);
     const tokenAmount = "100";
 
-    const decimals = await erc20.decimals();
+    setDecimals(await erc20.decimals());
     const amount = ethers.utils.parseUnits(tokenAmount, decimals);
 
     
