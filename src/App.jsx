@@ -43,6 +43,8 @@ particle.setERC4337(true);
 
 const App = ()=>{
   const [userInfo, setUserInfo] = useState(null);
+  const [caAddress, setCaAddress] = useState(null);
+  const [eoaAddress, setEoaAddress] = useState(null);
   const [ethBalance, setEthBalance] = useState();
 
   useEffect(() =>{
@@ -52,9 +54,12 @@ const App = ()=>{
   }, [userInfo]);
 
   const fetchEthBalance = async () =>{
-    const address = await smartAccount.getAddress();
-    const balance = await customProvider.getBalance(address);
+    const caAddress = await smartAccount.getAddress();
+    const eoaAddress = await smartAccount.getOwner();
+    const balance = await customProvider.getBalance(caAddress);
     setEthBalance(ethers.utils.formatEther(balance));
+    setCaAddress(caAddress);
+    setEoaAddress(eoaAddress);
 
   };
 
@@ -100,10 +105,24 @@ const App = ()=>{
             ): (
                 <Box>
                   <Flex>
-                    <Text fontSize='2xl'>{userInfo.name}&nbsp;:&nbsp;&nbsp; </Text>
+                    <Text fontSize='xl'>{userInfo.name}&nbsp;:&nbsp;&nbsp; </Text>
                     <Text fontSize='xl'>{ethBalance} ETH</Text>
                   </Flex>
-                  <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOp}> Execute User Operation</Button>
+                  <Flex>
+                    <Text fontSize='xl' >EOA Address: </Text>
+                  </Flex>
+                  <Flex>
+                    <Text fontSize='xl' >{eoaAddress}</Text>
+                  </Flex>
+                  <Flex>
+                    <Text fontSize='xl' >CA Address: </Text>
+                  </Flex>
+                  <Flex>
+                    <Text fontSize='xl' >{caAddress}</Text>
+                  </Flex>
+                  <Flex>
+                    <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOp}> Execute User Operation</Button>
+                  </Flex>
                 </Box>
             )}
           </Flex>
