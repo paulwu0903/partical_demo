@@ -95,8 +95,11 @@ const App = ()=>{
     // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
 
     // build user operation, feeQuote and tokenPaymasterAddress is optional.
-    //const userOpBundle = await smartAccount.buildUserOperation({txs, feeQuotes});
+    const userOpBundle = await smartAccount.buildUserOperation({txs});
+    const userOp = userOpBundle.userOp;
+    const userOpHash = userOpBundle.userOpHash;
 
+    const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
 
 
     const txResponse = await signer.sendTransaction(txs);
