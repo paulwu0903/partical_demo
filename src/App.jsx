@@ -28,7 +28,7 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   aaOptions:{
     biconomy: [{
       chainId: 5,
-      version: '1.0.0',
+      version: '1.1.0',
     }],
     cyberConnect: [{
       chainId: 5,
@@ -144,7 +144,7 @@ const App = ()=>{
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult.verifyingPaymasterGasless, tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult.verifyingPaymasterGasless, tokenPaymasterAddress: null});
       
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
