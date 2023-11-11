@@ -4,7 +4,7 @@ import {ParticleProvider} from '@particle-network/provider';
 import { EthereumGoerli } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
-import { Flex, Image, Text, Button, Center, Box, Stack, Alert, AlertIcon} from '@chakra-ui/react'
+import { Flex, Image, Text, Button, Center, Box, Stack, Alert, AlertIcon, AlertDescription, AlertTitle} from '@chakra-ui/react'
 import {RiTwitterXLine} from 'react-icons/ri';
 import {FaGoogle} from 'react-icons/fa';
 
@@ -137,7 +137,7 @@ const App = ()=>{
 
     // build user operation, feeQuote and tokenPaymasterAddress is optional.
     console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: nativeFeeQuotes, tokenPaymasterAddress: feeQuotesResult.tokenPaymaster});
   
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
