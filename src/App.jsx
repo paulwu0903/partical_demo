@@ -118,6 +118,7 @@ const App = ()=>{
 
     //get fee quotes with tx or txs
     const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
+    console.log(feeQuotesResult);
 
     // gasless transaction userOp, maybe null
     // const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
