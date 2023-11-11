@@ -28,7 +28,7 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   aaOptions:{
     biconomy: [{
       chainId: 5,
-      version: '1.0.0',
+      version: '1.1.0',
     }],
     paymasterApiKeys: [{
       chainId: 5,
@@ -125,27 +125,24 @@ const App = ()=>{
     // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
     // pay with Native tokens: transaction userOp
-    const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
-    const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
+    //const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
+    //const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
 
     // pay with ERC-20 tokens: fee quotes
     //const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
     //const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
-
-    // const txHashForPaymaster =  await smartAccount.sendUserOperation({gaslessUserOp, gaslessUserOpHash});
-    // console.log('Transaction hash: ', txHashForPaymaster);
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    //const userOpBundle = await smartAccount.buildUserOperation({tx: txs, });
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult.verifyingPaymasterNative['feeQuote'], tokenPaymasterAddress: "0x00000f79b7faf42eebadba19acc07cd08af44789"});
       
-    //const userOp = userOpBundle.userOp;
-    //const userOpHash = userOpBundle.userOpHash;
+    const userOp = userOpBundle.userOp;
+    const userOpHash = userOpBundle.userOpHash;
 
-    console.log(`user op: ${paidNativeUserOp}`)
-    console.log(`user op hash: ${paidNativeUserOpHash}`)
+    console.log(`user op: ${userOp}`)
+    console.log(`user op hash: ${userOpHash}`)
 
-    const txHash = await smartAccount.sendUserOperation({paidNativeUserOp, paidNativeUserOpHash});
+    const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
     console.log('Transaction hash: ', txHash);
     
     //await updateStatus(txHash, userOpHash)
