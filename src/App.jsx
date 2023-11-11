@@ -137,7 +137,7 @@ const App = ()=>{
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult.verifyingPaymasterNative['feeQuote'], tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
       
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
