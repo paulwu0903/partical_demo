@@ -4,7 +4,7 @@ import {ParticleProvider} from '@particle-network/provider';
 import { EthereumGoerli } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
-import { Flex, Image, Text, Button, Center, Box, Stack} from '@chakra-ui/react'
+import { Flex, Image, Text, Button, Center, Box, Stack, Alert, AlertIcon} from '@chakra-ui/react'
 import {RiTwitterXLine} from 'react-icons/ri';
 import {FaGoogle} from 'react-icons/fa';
 
@@ -47,12 +47,28 @@ const App = ()=>{
   const [caAddress, setCaAddress] = useState(null);
   const [eoaAddress, setEoaAddress] = useState(null);
   const [ethBalance, setEthBalance] = useState();
+  const [status, setStatus] = useState(null);
+  const [userOpHash, setUserOpHash] = useState(null);
+  const [txHash, setTxHash] = useState(null);
 
   useEffect(() =>{
     if (userInfo){
         fetchEthBalance();
     }
   }, [userInfo]);
+
+  useEffect(() =>{
+    if (status === 'success'){
+      return (
+        <Alert status='success'>
+          <AlertIcon />
+            User Operation Hash: {userOpHash}<br/>
+            Tx Hash: {txHash}
+        </Alert>
+        )
+    }
+     
+  }, [status, txHash, userOpHash]);
 
   const fetchEthBalance = async () =>{
     const caAddress = await smartAccount.getAddress();
@@ -138,6 +154,9 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
     console.log('Transaction hash: ', txHash);
+    setTxHash(txHash);
+    setUserOpHash(userOp);
+    setStatus('success');
 
 
     // const txResponse = await signer.sendTransaction(txs);
