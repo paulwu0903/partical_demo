@@ -57,18 +57,11 @@ const App = ()=>{
     }
   }, [userInfo]);
 
-  useEffect(() =>{
-    if (status === 'success'){
-      return (
-        <Alert status='success'>
-          <AlertIcon />
-            User Operation Hash: {userOpHash}<br/>
-            Tx Hash: {txHash}
-        </Alert>
-        )
-    }
-     
-  }, [status, txHash, userOpHash]);
+  const updateStatus = async (txHash, userOpHash) =>{
+    setStatus('success')
+    setTxHash(txHash)
+    setUserOpHash(userOpHash)
+  }
 
   const fetchEthBalance = async () =>{
     const caAddress = await smartAccount.getAddress();
@@ -154,9 +147,8 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
     console.log('Transaction hash: ', txHash);
-    setTxHash(txHash);
-    setUserOpHash(userOp);
-    setStatus('success');
+    
+    await updateStatus(txHash, userOpHash)
 
 
     // const txResponse = await signer.sendTransaction(txs);
@@ -207,6 +199,17 @@ const App = ()=>{
                     <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOp}> Execute User Operation</Button>
                   </Flex>
                 </Box>
+            )}
+            {status!= null?(
+              <Box>
+                <Alert status='success'>
+                  <AlertIcon />
+                  User Operation Hash: {userOpHash} <br/>
+                  Tx hash: {txHash}
+                </Alert>
+              </Box>
+            ):(
+              <Box></Box>
             )}
           </Flex>
         </Box>
