@@ -20,7 +20,7 @@ const particle = new ParticleNetwork({
     ...config,
     chainName: EthereumGoerli.name,
     chainId: EthereumGoerli.id,
-    wallet: {displayWalletEntry: true, uiMode: 'dark'}
+    wallet: {displayWalletEntry: true, uiMode: 'dark', supportChains: [{ id: 1, name: "Ethereum"}, { id: 5, name: "Ethereum"}],}
 });
 
 const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
@@ -29,14 +29,6 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
     biconomy: [{
       chainId: 5,
       version: '1.0.0',
-    }],
-    cyberConnect: [{
-      chainId: 5,
-      version: '1.0.0',
-    }],
-    simple: [{
-        chainId: 5,
-        version: '1.0.0',
     }],
     paymasterApiKeys: [{
       chainId: 5,
@@ -144,7 +136,7 @@ const App = ()=>{
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: "0x000031DD6D9D3A133E663660b959162870D755D4"});
       
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
