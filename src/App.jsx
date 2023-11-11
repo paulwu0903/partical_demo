@@ -4,7 +4,7 @@ import {ParticleProvider} from '@particle-network/provider';
 import { EthereumGoerli } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
-import { Flex, Image, Text, Button, Center, Box, Stack, Alert, AlertIcon, AlertDescription, AlertTitle} from '@chakra-ui/react'
+import { Flex, Image, Text, Button, Center, Box, Stack/*, Alert, AlertIcon, AlertDescription, AlertTitle*/} from '@chakra-ui/react'
 import {RiTwitterXLine} from 'react-icons/ri';
 import {FaGoogle} from 'react-icons/fa';
 
@@ -47,9 +47,9 @@ const App = ()=>{
   const [caAddress, setCaAddress] = useState(null);
   const [eoaAddress, setEoaAddress] = useState(null);
   const [ethBalance, setEthBalance] = useState();
-  const [status, setStatus] = useState(null);
-  const [userOpHash, setUserOpHash] = useState(null);
-  const [txHash, setTxHash] = useState(null);
+  // const [status, setStatus] = useState(null);
+  // const [userOpHash, setUserOpHash] = useState(null);
+  // const [txHash, setTxHash] = useState(null);
 
   useEffect(() =>{
     if (userInfo){
@@ -57,11 +57,11 @@ const App = ()=>{
     }
   }, [userInfo]);
 
-  const updateStatus = async (txHash, userOpHash) =>{
-    setStatus('success')
-    setTxHash(txHash)
-    setUserOpHash(userOpHash)
-  }
+  // const updateStatus = async (txHash, userOpHash) =>{
+  //   setStatus('success')
+  //   setTxHash(txHash)
+  //   setUserOpHash(userOpHash)
+  // }
 
   const fetchEthBalance = async () =>{
     const caAddress = await smartAccount.getAddress();
@@ -116,29 +116,28 @@ const App = ()=>{
         data: erc721.interface.encodeFunctionData("publicMint", [3]),
       }];
 
-    // get fee quotes with tx or txs
+    //get fee quotes with tx or txs
     const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
-    // gasless transaction userOp, maybe null
-    // const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
-    // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
-    // pay with  Native tokens: transaction userOp
-    const nativeFeeQuotes = feeQuotesResult.verifyingPaymasterNative['feeQuote'];
-    console.log(nativeFeeQuotes['tokenInfo']['chainId']);
-    console.log(nativeFeeQuotes['tokenInfo']['address']);
-    console.log(nativeFeeQuotes['tokenInfo']['name']);
-    console.log(nativeFeeQuotes['tokenInfo']['symbol']);
-    console.log(nativeFeeQuotes['tokenInfo']['decimals']);
+    // gasless transaction userOp, maybe null
+    const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
+    const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
+
+    // pay with Native tokens: transaction userOp
+    //const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
     //const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
 
     // pay with ERC-20 tokens: fee quotes
-    // const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
-    // const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
+    //const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
+    //const tokenFeeQuotes = feeQuotesResult.tokenPaymaster.feeQuotes;
 
-    // build user operation, feeQuote and tokenPaymasterAddress is optional.
-    console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: nativeFeeQuotes, tokenPaymasterAddress: feeQuotesResult.tokenPaymaster});
-  
+    const txHashForPaymaster =  await smartAccount.sendUserOperation({gaslessUserOp, gaslessUserOpHash});
+    console.log('Transaction hash: ', txHashForPaymaster);
+    
+
+    //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+      
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
 
@@ -148,7 +147,7 @@ const App = ()=>{
     const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
     console.log('Transaction hash: ', txHash);
     
-    await updateStatus(txHash, userOpHash)
+    //await updateStatus(txHash, userOpHash)
 
 
     // const txResponse = await signer.sendTransaction(txs);
@@ -200,7 +199,7 @@ const App = ()=>{
                   </Flex>
                 </Box>
             )}
-            {status!= null?(
+            {/* {status!= null?(
               <Box>
                 <Alert
                   status='success'
@@ -223,7 +222,7 @@ const App = ()=>{
               </Box>
             ):(
               <Box></Box>
-            )}
+            )} */}
           </Flex>
         </Box>
       </Center>
