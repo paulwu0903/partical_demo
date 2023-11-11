@@ -28,7 +28,7 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   aaOptions:{
     biconomy: [{
       chainId: 5,
-      version: '1.1.0',
+      version: '1.0.0',
     }],
     paymasterApiKeys: [{
       chainId: 5,
