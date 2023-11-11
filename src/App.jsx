@@ -30,6 +30,14 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
       chainId: 5,
       version: '1.0.0',
     }],
+    cyberConnect: [{
+      chainId: 5,
+      version: '1.0.0',
+    }],
+    simple: [{
+        chainId: 5,
+        version: '1.0.0',
+    }],
     paymasterApiKeys: [{
       chainId: 5,
       apiKey: 'E7dZKDcSX.599b8ee9-a5ee-45db-835d-446395eff164',
