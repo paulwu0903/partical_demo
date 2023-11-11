@@ -202,10 +202,23 @@ const App = ()=>{
             )}
             {status!= null?(
               <Box>
-                <Alert status='success'>
-                  <AlertIcon />
-                  User Operation Hash: {userOpHash} <br/>
-                  Tx hash: {txHash}
+                <Alert
+                  status='success'
+                  variant='subtle'
+                  flexDirection='column'
+                  alignItems='center'
+                  justifyContent='center'
+                  textAlign='center'
+                  height='200px'
+                >
+                  <AlertIcon boxSize='40px' mr={0} />
+                  <AlertTitle mt={4} mb={1} fontSize='lg'>
+                    Tx on Chain!!
+                  </AlertTitle>
+                  <AlertDescription maxWidth='sm'>
+                    User Operation Hash: {userOpHash} <br/>
+                    Tx Hash : {txHash}
+                  </AlertDescription>
                 </Alert>
               </Box>
             ):(
