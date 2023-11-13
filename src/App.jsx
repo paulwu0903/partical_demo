@@ -124,8 +124,8 @@ const App = ()=>{
     console.log(feeQuotesResult);
 
     // gasless transaction userOp, maybe null
-    const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
-    const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
+    const gaslessUserOpBundle = feeQuotesResult.verifyingPaymasterGasless?.userOp;
+    // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
     // pay with Native tokens: transaction userOp
     //const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
@@ -142,10 +142,10 @@ const App = ()=>{
     // const userOp = userOpBundle.userOp;
     // const userOpHash = userOpBundle.userOpHash;
 
-    console.log(`user op: ${gaslessUserOp}`)
-    console.log(`user op hash: ${gaslessUserOpHash}`)
+    // console.log(`user op: ${gaslessUserOpBundle.userOp}`)
+    // console.log(`user op hash: ${gaslessUserOpBundle.userOp}`)
 
-    const txHash = await smartAccount.sendUserOperation({gaslessUserOp, gaslessUserOpHash});
+    const txHash = await smartAccount.sendUserOperation(gaslessUserOpBundle);
     console.log('Transaction hash: ', txHash);
     
     //await updateStatus(txHash, userOpHash)
