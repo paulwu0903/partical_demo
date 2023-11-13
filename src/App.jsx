@@ -10,6 +10,7 @@ import {FaGoogle} from 'react-icons/fa';
 
 
 
+
 const config = {
     projectId: process.env.REACT_APP_PROJECT_ID,
     clientKey: process.env.REACT_APP_CLIENT_KEY,
@@ -88,7 +89,7 @@ const App = ()=>{
     const ERC721_ABI = require('./erc721Abi.json');
 
     const INFURA_ID = "803d8c704fb1402183256652496311e2";
-    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mumbai.infura.io/v3/${INFURA_ID}`);
+    const provider = new ethers.providers.JsonRpcProvider(`https://rpc.particle.network/evm-chain`);
 
     
 
