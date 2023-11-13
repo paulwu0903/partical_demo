@@ -147,7 +147,7 @@ const App = ()=>{
     console.log(`user op: ${userOp}`)
     console.log(`user op hash: ${userOpHash}`)
 
-    const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
+    const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
     
     //await updateStatus(txHash, userOpHash)
