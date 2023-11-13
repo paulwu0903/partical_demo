@@ -27,7 +27,6 @@ const particle = new ParticleNetwork({
 
 const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   ...config,
-  networkConfig: { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: PolygonMumbai.id},
   aaOptions:{
     biconomy: [{
       chainId: PolygonMumbai.id,
@@ -75,6 +74,8 @@ const App = ()=>{
     setCaAddress(caAddress);
     setEoaAddress(eoaAddress);
 
+    console.log(smartAccount.getPaymasterApiKey());
+
   };
 
   const handleLogin = async (preferredAuthType) =>{
@@ -90,7 +91,7 @@ const App = ()=>{
     const ERC721_ABI = require('./erc721Abi.json');
 
     const INFURA_ID = "803d8c704fb1402183256652496311e2";
-    const provider = new ethers.providers.JsonRpcProvider(`https://rpc.particle.network/evm-chain`);
+    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mumbai.infura.io/v3/${INFURA_ID}`);
 
     
 
