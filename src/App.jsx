@@ -26,7 +26,7 @@ const particle = new ParticleNetwork({
 
 const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   ...config,
-  //networkConfig: { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: PolygonMumbai.id},
+  networkConfig: { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: PolygonMumbai.id},
   aaOptions:{
     biconomy: [{
       chainId: PolygonMumbai.id,
