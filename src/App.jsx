@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {ParticleNetwork} from '@particle-network/auth';
 import {ParticleProvider} from '@particle-network/provider';
-import { EthereumGoerli } from '@particle-network/chains';
+import { PolygonMumbai } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
 import { Flex, Image, Text, Button, Center, Box, Stack/*, Alert, AlertIcon, AlertDescription, AlertTitle*/} from '@chakra-ui/react'
@@ -18,14 +18,14 @@ const config = {
 
 const particle = new ParticleNetwork({
     ...config,
-    chainName: EthereumGoerli.name,
-    chainId: EthereumGoerli.id,
-    wallet: {displayWalletEntry: true, uiMode: 'dark', supportChains: [{ id: 1, name: "Ethereum"}, { id: 5, name: "Ethereum"}],}
+    chainName: PolygonMumbai.name,
+    chainId: PolygonMumbai.id,
+    wallet: {displayWalletEntry: true, uiMode: 'dark',}
 });
 
 const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   ...config,
-  networkConfig: { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: EthereumGoerli.id},
+  networkConfig: { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: PolygonMumbai.id},
   aaOptions:{
     biconomy: [{
       chainId: 5,
@@ -41,6 +41,7 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
 
 const customProvider = new ethers.providers.Web3Provider(new AAWrapProvider(smartAccount,
 SendTransactionMode.Gasless), 'any');
+
 particle.setERC4337(true);
 
 const App = ()=>{
@@ -80,8 +81,8 @@ const App = ()=>{
   }
 
   const executeUserOp = async ()=>{
-    const tokenAddress = "0xA847BD47B0b199207E7DE5976BAB4e3Cec5b0992";
-    const nftAddress = "0xCF454316459e26595FF9D942B671d0515FA95c26";
+    const tokenAddress = "0x5B7123C0f55646B1E54Ef9068A3F2f33dd139d5d";
+    const nftAddress = "0xbb6c86bdc4462bba46c5c6f3cba0de9cc7b04f38";
 
     const ERC20_ABI = require('./erc20Abi.json');
     const ERC721_ABI = require('./erc721Abi.json');
