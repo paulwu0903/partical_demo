@@ -180,7 +180,7 @@ const App = ()=>{
                 <Box>
                   <Flex>
                     <Text fontSize='xl'>{userInfo.name}&nbsp;:&nbsp;&nbsp; </Text>
-                    <Text fontSize='xl'>{ethBalance} ETH</Text>
+                    <Text fontSize='xl'>{ethBalance} MATIC</Text>
                   </Flex>
                   <Flex>
                     <Text fontSize='xl' >EOA Address: </Text>
