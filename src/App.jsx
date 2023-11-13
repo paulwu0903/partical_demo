@@ -134,18 +134,18 @@ const App = ()=>{
     // const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
 
     // pay with ERC-20 tokens: fee quotes
-    // const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
-    // const tokenFeeQuote = feeQuotesResult.tokenPaymaster.feeQuotes[2];
+    const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
+    const tokenFeeQuote = feeQuotesResult.tokenPaymaster.feeQuotes[0];
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    //const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: tokenFeeQuote, tokenPaymasterAddress: tokenPaymasterAddress});
       
-    // const userOp = userOpBundle.userOp;
-    // const userOpHash = userOpBundle.userOpHash;
+    const userOp = userOpBundle.userOp;
+    const userOpHash = userOpBundle.userOpHash;
 
-    console.log(`user op: ${gaslessUserOp}`)
-    console.log(`user op hash: ${gaslessUserOpHash}`)
+    console.log(`user op: ${userOp}`)
+    console.log(`user op hash: ${userOpHash}`)
 
     const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
     console.log('Transaction hash: ', txHash);
