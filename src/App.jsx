@@ -85,13 +85,13 @@ const App = ()=>{
 
   const executeUserOp = async ()=>{
     const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
-    const nftAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
+    const nftAddress = "0x1a655F4eB12Ab4d464459044E15B8069d894E04b";
 
     const ERC20_ABI = require('./erc20Abi.json');
     const ERC721_ABI = require('./erc721Abi.json');
 
     const INFURA_ID = "803d8c704fb1402183256652496311e2";
-    const provider = new ethers.providers.JsonRpcProvider(`https://sepolia.infura.io/v3/${INFURA_ID}`);
+    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mumbai.infura.io/v3/${INFURA_ID}`);
 
     
 
@@ -139,7 +139,7 @@ const App = ()=>{
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    // const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
+    //const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
       
     // const userOp = userOpBundle.userOp;
     // const userOpHash = userOpBundle.userOpHash;
