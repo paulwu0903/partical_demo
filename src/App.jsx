@@ -124,7 +124,7 @@ const App = ()=>{
     console.log(feeQuotesResult);
 
     // gasless transaction userOp, maybe null
-    const gaslessUserOpBundle = feeQuotesResult.verifyingPaymasterGasless?.userOp;
+    const gaslessUserOpBundle = feeQuotesResult.verifyingPaymasterGasless;
     // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
     // pay with Native tokens: transaction userOp
