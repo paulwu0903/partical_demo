@@ -137,15 +137,16 @@ const App = ()=>{
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    //const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: feeQuotesResult., tokenPaymasterAddress: null});
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
       
-    // const userOp = userOpBundle.userOp;
-    // const userOpHash = userOpBundle.userOpHash;
+    const userOp = userOpBundle.userOp;
+    userOp['paymasterAndData'] = gaslessUserOp['paymasterAndData'];
+    const userOpHash = userOpBundle.userOpHash;
 
-    console.log(`user op: ${gaslessUserOp}`)
-    console.log(`user op hash: ${gaslessUserOpHash}`)
+    console.log(`user op: ${userOp}`)
+    console.log(`user op hash: ${userOpHash}`)
 
-    const txHash = await smartAccount.sendUserOperation({gaslessUserOp, gaslessUserOpHash});
+    const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
     console.log('Transaction hash: ', txHash);
     
     //await updateStatus(txHash, userOpHash)
