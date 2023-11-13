@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {ParticleNetwork} from '@particle-network/auth';
 import {ParticleProvider} from '@particle-network/provider';
-import { EthereumSepolia } from '@particle-network/chains';
+import { PolygonMumbai } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
 import { Flex, Image, Text, Button, Center, Box, Stack/*, Alert, AlertIcon, AlertDescription, AlertTitle*/} from '@chakra-ui/react'
@@ -20,8 +20,8 @@ const config = {
 
 const particle = new ParticleNetwork({
     ...config,
-    chainName: EthereumSepolia.name,
-    chainId: EthereumSepolia.id,
+    chainName: PolygonMumbai.name,
+    chainId: PolygonMumbai.id,
     wallet: {displayWalletEntry: true, uiMode: 'dark',}
 });
 
@@ -29,11 +29,11 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   ...config,
   aaOptions:{
     biconomy: [{
-      chainId: EthereumSepolia.id,
+      chainId: PolygonMumbai.id,
       version: '1.0.0',
     }],
     paymasterApiKeys: [{
-      chainId: EthereumSepolia.id,
+      chainId: PolygonMumbai.id,
       apiKey: process.env.REACT_APP_BICONOMY_KEY,
   }]
   }
@@ -84,8 +84,8 @@ const App = ()=>{
   }
 
   const executeUserOp = async ()=>{
-    const tokenAddress = "0x76b87993C38C1B03bbA02B6354AB88949Ffd85ee";
-    const nftAddress = "0xf4C5D079Da3018d60FceDFBD614fd8Fc7C40A3eb";
+    const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
+    const nftAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
 
     const ERC20_ABI = require('./erc20Abi.json');
     const ERC721_ABI = require('./erc721Abi.json');
