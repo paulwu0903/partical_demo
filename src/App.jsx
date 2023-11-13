@@ -11,6 +11,7 @@ import {FaGoogle} from 'react-icons/fa';
 
 
 
+
 const config = {
     projectId: process.env.REACT_APP_PROJECT_ID,
     clientKey: process.env.REACT_APP_CLIENT_KEY,
@@ -124,8 +125,8 @@ const App = ()=>{
     console.log(feeQuotesResult);
 
     // gasless transaction userOp, maybe null
-    // const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
-    // const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
+    const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
+    const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
     // pay with Native tokens: transaction userOp
     // const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
@@ -137,15 +138,15 @@ const App = ()=>{
     
 
     //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
-    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
+    // const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: feeQuotesResult.tokenPaymaster.tokenPaymasterAddress});
       
-    const userOp = userOpBundle.userOp;
-    const userOpHash = userOpBundle.userOpHash;
+    // const userOp = userOpBundle.userOp;
+    // const userOpHash = userOpBundle.userOpHash;
 
-    console.log(`user op: ${userOp}`)
-    console.log(`user op hash: ${userOpHash}`)
+    console.log(`user op: ${gaslessUserOp}`)
+    console.log(`user op hash: ${gaslessUserOpHash}`)
 
-    const txHash = await smartAccount.sendUserOperation({userOp, userOpHash});
+    const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
     console.log('Transaction hash: ', txHash);
     
     //await updateStatus(txHash, userOpHash)
