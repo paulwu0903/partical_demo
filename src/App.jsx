@@ -28,12 +28,12 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
   networkConfig: { dappAPIKey: process.env.REACT_APP_BICONOMY_KEY, chainId: PolygonMumbai.id},
   aaOptions:{
     biconomy: [{
-      chainId: 5,
+      chainId: PolygonMumbai.id,
       version: '1.0.0',
     }],
     paymasterApiKeys: [{
-      chainId: 5,
-      apiKey: 'E7dZKDcSX.599b8ee9-a5ee-45db-835d-446395eff164',
+      chainId: PolygonMumbai.id,
+      apiKey: process.env.REACT_APP_BICONOMY_KEY,
   }]
   }
 });
