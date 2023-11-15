@@ -273,8 +273,8 @@ const App = ()=>{
           <Flex>
             {!userInfo ? (
               <Flex className='login-section'>
-                <Button padding="16px" leftIcon={<FaGoogle />} bg="#F5F5F5" borderRadius="15px" variant="solid" size='lg' onClick={() => handleLogin('google')}>Sign in with Google</Button>
-                <Button  padding="16px" leftIcon={<RiTwitterXLine />} bg="#F5F5F5" borderRadius="15px" size='lg' onClick={()=> handleLogin('twitter')}>Sign in wth Twitter</Button>
+                <Button padding= {[2,3,4]} size={[1,2,3]} leftIcon={<FaGoogle />} bg="#F5F5F5" borderRadius="15px" variant="solid"  onClick={() => handleLogin('google')}>Sign in with Google</Button>
+                <Button  padding= {[2,3,4]} size={[1,2,3]} leftIcon={<RiTwitterXLine />} bg="#F5F5F5" borderRadius="15px"  onClick={()=> handleLogin('twitter')}>Sign in wth Twitter</Button>
               </Flex>
             ): (
                 <Box>
@@ -294,7 +294,7 @@ const App = ()=>{
                   <Flex>
                     <Text fontSize='xl' >{caAddress}</Text>
                   </Flex>
-                  <Flex>
+                  <Flex padding= {[2,3,4]} size={[1,2,3]}>
                     <Button Button  padding= {[2,3,4]} size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByUser}> Execute User Operation ( Gas: ETH, Payer: User)</Button>
                     <Button Button  padding= {[2,3,4]} size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Execute User Operation ( Gas: ETH, Payer: Paymaster )</Button>
                     <Button Button  padding= {[2,3,4]} size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> Execute User Operation ( Gas: USDC, Payer: Paymaster )</Button>
