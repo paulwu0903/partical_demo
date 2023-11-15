@@ -296,8 +296,8 @@ const App = ()=>{
                   </Flex>
                   <Flex  fontSize={[1,2,3]}>
                     <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByUser}> 自行支付 </Button>
-                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Execute User Operation ( Gas: ETH, Payer: Paymaster )</Button>
-                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> Execute User Operation ( Gas: USDC, Payer: Paymaster )</Button>
+                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Paymaster支付</Button>
+                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> ERC-20支付 </Button>
                   </Flex>
                 </Box>
             )}
