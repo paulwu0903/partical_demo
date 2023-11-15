@@ -11,21 +11,10 @@ import {
   Button, 
   Center, 
   Box, 
-  Stack,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  AlertDialogCloseButton,
+  Stack
 } from '@chakra-ui/react'
 import {RiTwitterXLine} from 'react-icons/ri';
 import {FaGoogle} from 'react-icons/fa';
-
-
-
-
 
 const config = {
     projectId: process.env.REACT_APP_PROJECT_ID,
@@ -68,7 +57,7 @@ const App = ()=>{
   // const [status, setStatus] = useState(null);
   // const [userOpHash, setUserOpHash] = useState(null);
   const [tx, setTx] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(true);
 
   useEffect(() =>{
     if (userInfo){
@@ -99,13 +88,6 @@ const App = ()=>{
     setUserInfo(user);
   }
 
-  const handleRes = async(res)=>{
-    if (res != null){
-      setSuccess(true);
-      setTx(res)
-    }
-  }
-
   const executeUserOpAndGasNativeByUser = async ()=>{
     const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
     const nftAddress = "0x1a655F4eB12Ab4d464459044E15B8069d894E04b";
@@ -127,25 +109,30 @@ const App = ()=>{
     
 
     const txs = 
-      [{
-      to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      value : ethers.utils.parseEther('0.001'),
-      },{
-        to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-        value : ethers.utils.parseEther('0.002'),
-      },{
+      [
+      // {
+      // to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      // value : ethers.utils.parseEther('0.001'),
+      // },
+      // {
+      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      //   value : ethers.utils.parseEther('0.002'),
+      // },
+      {
         to: tokenAddress,
         data: erc20.interface.encodeFunctionData("mint", [amount]),
-      },{
+      },
+      {
         to : tokenAddress,
         data: erc20.interface.encodeFunctionData("transfer", ["0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf", amount])
-      },{
+      },
+      {
         to: nftAddress,
         data: erc721.interface.encodeFunctionData("publicMint", [3]),
       }];
 
     const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
-      
+    
     const userOp = userOpBundle.userOp;
     const userOpHash = userOpBundle.userOpHash;
 
@@ -154,9 +141,6 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
-
-    
-    await handleRes(txHash);
     
 
   }
@@ -182,19 +166,24 @@ const App = ()=>{
     
 
     const txs = 
-      [{
-      to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      value : ethers.utils.parseEther('0.001'),
-      },{
-        to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-        value : ethers.utils.parseEther('0.002'),
-      },{
+      [
+      // {
+      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      //   value : ethers.utils.parseEther('0.001'),
+      // },
+      // {
+      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      //   value : ethers.utils.parseEther('0.002'),
+      // },
+      {
         to: tokenAddress,
         data: erc20.interface.encodeFunctionData("mint", [amount]),
-      },{
+      },
+      {
         to : tokenAddress,
         data: erc20.interface.encodeFunctionData("transfer", ["0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf", amount])
-      },{
+      },
+      {
         to: nftAddress,
         data: erc721.interface.encodeFunctionData("publicMint", [3]),
       }];
@@ -213,7 +202,6 @@ const App = ()=>{
     const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
     console.log('Transaction hash: ', txHash);
 
-    await handleRes(txHash);
   
   }
 
@@ -238,19 +226,24 @@ const App = ()=>{
     
 
     const txs = 
-      [{
-      to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      value : ethers.utils.parseEther('0.001'),
-      },{
-        to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-        value : ethers.utils.parseEther('0.002'),
-      },{
+      [
+      // {
+      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      //   value : ethers.utils.parseEther('0.001'),
+      // },
+      // {
+      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      //   value : ethers.utils.parseEther('0.002'),
+      // },
+      {
         to: tokenAddress,
         data: erc20.interface.encodeFunctionData("mint", [amount]),
-      },{
+      },
+      {
         to : tokenAddress,
         data: erc20.interface.encodeFunctionData("transfer", ["0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf", amount])
-      },{
+      },
+      {
         to: nftAddress,
         data: erc721.interface.encodeFunctionData("publicMint", [3]),
       }];
@@ -276,29 +269,10 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
-    await handleRes(txHash);
   }
 
   return (
     <Center>
-      {success? (
-          <AlertDialog
-          motionPreset='slideInBottom'
-          isCentered
-        >
-          <AlertDialogOverlay />
-
-          <AlertDialogContent>
-            <AlertDialogHeader>Success</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
-              Tx: {tx}
-            </AlertDialogBody>
-          </AlertDialogContent>
-        </AlertDialog>
-      ):(
-        <></>
-      )}
       <Stack>
         <Center>
           <Box>
