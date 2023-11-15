@@ -83,7 +83,7 @@ const App = ()=>{
     setUserInfo(user);
   }
 
-  const executeUserOp = async ()=>{
+  const executeUserOpAndGasNativeByUser = async ()=>{
     const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
     const nftAddress = "0x1a655F4eB12Ab4d464459044E15B8069d894E04b";
 
@@ -92,7 +92,57 @@ const App = ()=>{
 
     const INFURA_ID = "803d8c704fb1402183256652496311e2";
     const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mumbai.infura.io/v3/${INFURA_ID}`);
+    
+    
 
+    const erc20 = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+    const erc721 = new ethers.Contract(nftAddress, ERC721_ABI, provider);
+    const tokenAmount = "100";
+
+    const amount = ethers.utils.parseUnits(tokenAmount, 18);
+
+    
+
+    const txs = 
+      [{
+      to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      value : ethers.utils.parseEther('0.001'),
+      },{
+        to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+        value : ethers.utils.parseEther('0.002'),
+      },{
+        to: tokenAddress,
+        data: erc20.interface.encodeFunctionData("mint", [amount]),
+      },{
+        to : tokenAddress,
+        data: erc20.interface.encodeFunctionData("transfer", ["0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf", amount])
+      },{
+        to: nftAddress,
+        data: erc721.interface.encodeFunctionData("publicMint", [3]),
+      }];
+
+    const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: null, tokenPaymasterAddress: null});
+      
+    const userOp = userOpBundle.userOp;
+    const userOpHash = userOpBundle.userOpHash;
+
+    console.log(`user op: ${userOp}`)
+    console.log(`user op hash: ${userOpHash}`)
+
+    const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
+    console.log('Transaction hash: ', txHash);
+  }
+
+  const executeUserOpAndGasNativeByPaymaster = async ()=>{
+    const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
+    const nftAddress = "0x1a655F4eB12Ab4d464459044E15B8069d894E04b";
+
+    const ERC20_ABI = require('./erc20Abi.json');
+    const ERC721_ABI = require('./erc721Abi.json');
+
+    const INFURA_ID = "803d8c704fb1402183256652496311e2";
+    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mumbai.infura.io/v3/${INFURA_ID}`);
+    
     
 
     const erc20 = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
@@ -129,9 +179,56 @@ const App = ()=>{
     const gaslessUserOp = feeQuotesResult.verifyingPaymasterGasless?.userOp;
     const gaslessUserOpHash = feeQuotesResult.verifyingPaymasterGasless?.userOpHash;
 
-    // pay with Native tokens: transaction userOp
-    // const paidNativeUserOp = feeQuotesResult.verifyingPaymasterNative?.userOp;
-    // const paidNativeUserOpHash = feeQuotesResult.verifyingPaymasterNative?.userOpHash;
+    console.log(`user op: ${gaslessUserOp}`)
+    console.log(`user op hash: ${gaslessUserOpHash}`)
+
+    const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
+    console.log('Transaction hash: ', txHash);
+  
+  }
+
+  const executeUserOpAndGasERC20ByUser = async ()=>{
+    const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
+    const nftAddress = "0x1a655F4eB12Ab4d464459044E15B8069d894E04b";
+
+    const ERC20_ABI = require('./erc20Abi.json');
+    const ERC721_ABI = require('./erc721Abi.json');
+
+    const INFURA_ID = "803d8c704fb1402183256652496311e2";
+    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mumbai.infura.io/v3/${INFURA_ID}`);
+    
+    
+
+    const erc20 = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+    const erc721 = new ethers.Contract(nftAddress, ERC721_ABI, provider);
+    const tokenAmount = "100";
+
+    const amount = ethers.utils.parseUnits(tokenAmount, 18);
+
+    
+
+    const txs = 
+      [{
+      to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+      value : ethers.utils.parseEther('0.001'),
+      },{
+        to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
+        value : ethers.utils.parseEther('0.002'),
+      },{
+        to: tokenAddress,
+        data: erc20.interface.encodeFunctionData("mint", [amount]),
+      },{
+        to : tokenAddress,
+        data: erc20.interface.encodeFunctionData("transfer", ["0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf", amount])
+      },{
+        to: nftAddress,
+        data: erc721.interface.encodeFunctionData("publicMint", [3]),
+      }];
+
+    //get fee quotes with tx or txs
+    const feeQuotesResult = await smartAccount.getFeeQuotes(txs);
+    console.log(feeQuotesResult);
+
 
     // pay with ERC-20 tokens: fee quotes
     const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
@@ -198,7 +295,9 @@ const App = ()=>{
                     <Text fontSize='xl' >{caAddress}</Text>
                   </Flex>
                   <Flex>
-                    <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOp}> Execute User Operation</Button>
+                    <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByUser}> Execute User Operation ( Gas: ETH, Payer: User)</Button>
+                    <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Execute User Operation ( Gas: ETH, Payer: Paymaster )</Button>
+                    <Button Button  padding="16px" size={'xl'} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> Execute User Operation ( Gas: USDC, Payer: Paymaster )</Button>
                   </Flex>
                 </Box>
             )}
