@@ -256,15 +256,15 @@ const App = ()=>{
   }
 
   return (
-    
+    <Center>
       <Stack>
         <Center>
           <Box>
               <Flex className='App'>
-                <Flex className='logos-section'>
-                  <Image src='https://i.imgur.com/HBfABYa.png' alt='Biconomy Logo' className='biconomy-logo' />
-                  <Image src='https://i.imgur.com/2btL79J.png' alt='Particle Network Logo' className='particle-logo' />
-                </Flex>
+                <Box className='logos-section' >
+                  <Image sizes='sm' src='https://i.imgur.com/HBfABYa.png' alt='Biconomy Logo' className='biconomy-logo' />
+                  <Image sizes='sm'  src='https://i.imgur.com/2btL79J.png' alt='Particle Network Logo' className='particle-logo' />
+                </Box>
               </Flex>
           </Box>
       </Center>
@@ -279,56 +279,34 @@ const App = ()=>{
             ): (
                 <Box>
                   <Flex>
-                    <Text fontSize='xl'>{userInfo.name}&nbsp;:&nbsp;&nbsp; </Text>
-                    <Text fontSize='xl'>{ethBalance} MATIC</Text>
+                    <Text fontSize={[1,2,3]}>{userInfo.name}&nbsp;:&nbsp;&nbsp; </Text>
+                    <Text fontSize={[1,2,3]}>{ethBalance} MATIC</Text>
                   </Flex>
                   <Flex>
-                    <Text fontSize='xl' >EOA Address: </Text>
+                    <Text fontSize={[1,2,3]} >EOA Address: </Text>
                   </Flex>
                   <Flex>
-                    <Text fontSize='xl' >{eoaAddress}</Text>
+                    <Text fontSize={[1,2,3]} >{eoaAddress}</Text>
                   </Flex>
                   <Flex>
-                    <Text fontSize='xl' >CA Address: </Text>
+                    <Text fontSize={[1,2,3]} >CA Address: </Text>
                   </Flex>
                   <Flex>
-                    <Text fontSize='xl' >{caAddress}</Text>
+                    <Text fontSize={[1,2,3]} >{caAddress}</Text>
                   </Flex>
-                  <Flex  size={[1,2,3]}>
+                  <Flex  fontSize={[1,2,3]}>
                     <Button Button  padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByUser}> Execute User Operation ( Gas: ETH, Payer: User)</Button>
                     <Button Button  padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Execute User Operation ( Gas: ETH, Payer: Paymaster )</Button>
                     <Button Button  padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> Execute User Operation ( Gas: USDC, Payer: Paymaster )</Button>
                   </Flex>
                 </Box>
             )}
-            {/* {status!= null?(
-              <Box>
-                <Alert
-                  status='success'
-                  variant='subtle'
-                  flexDirection='column'
-                  alignItems='center'
-                  justifyContent='center'
-                  textAlign='center'
-                  height='200px'
-                >
-                  <AlertIcon boxSize='40px' mr={0} />
-                  <AlertTitle mt={4} mb={1} fontSize='lg'>
-                    Tx on Chain!!
-                  </AlertTitle>
-                  <AlertDescription maxWidth='sm'>
-                    User Operation Hash: {userOpHash} <br/>
-                    Tx Hash : {txHash}
-                  </AlertDescription>
-                </Alert>
-              </Box>
-            ):(
-              <Box></Box>
-            )} */}
+            
           </Flex>
         </Box>
       </Center>
     </Stack>
+  </Center>
     
   );
 
