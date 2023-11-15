@@ -99,6 +99,13 @@ const App = ()=>{
     setUserInfo(user);
   }
 
+  const handleRes = async(res)=>{
+    if (res != null){
+      setSuccess(true);
+      setTx(res)
+    }
+  }
+
   const executeUserOpAndGasNativeByUser = async ()=>{
     const tokenAddress = "0x84bC8e38798B0a8B10ff6715d0Aa9E3aDaD19Fad";
     const nftAddress = "0x1a655F4eB12Ab4d464459044E15B8069d894E04b";
@@ -148,12 +155,8 @@ const App = ()=>{
     const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
 
-    if (txHash){
-      setSuccess(true);
-      setTx(tx)
-    }
-    // setSuccess(false);
-    // setTx(null);
+    
+    await handleRes(txHash);
     
 
   }
@@ -210,12 +213,7 @@ const App = ()=>{
     const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
     console.log('Transaction hash: ', txHash);
 
-    if (txHash){
-      setSuccess(true);
-      setTx(tx)
-    }
-    // setSuccess(false);
-    // setTx(null);
+    await handleRes(txHash);
   
   }
 
@@ -278,12 +276,7 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
-    if (txHash){
-      setSuccess(true);
-      setTx(tx)
-    }
-    // setSuccess(false);
-    // setTx(null);
+    await handleRes(txHash);
   }
 
   return (
