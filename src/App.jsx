@@ -295,9 +295,9 @@ const App = ()=>{
                     <Text fontSize={[1,2,3]} >{caAddress}</Text>
                   </Flex>
                   <Flex  fontSize={[1,2,3]}>
-                    <Button Button  padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByUser}> Execute User Operation ( Gas: ETH, Payer: User)</Button>
-                    <Button Button  padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Execute User Operation ( Gas: ETH, Payer: Paymaster )</Button>
-                    <Button Button  padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> Execute User Operation ( Gas: USDC, Payer: Paymaster )</Button>
+                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByUser}> 自行支付 </Button>
+                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasNativeByPaymaster}> Execute User Operation ( Gas: ETH, Payer: Paymaster )</Button>
+                    <Button fontSize="lg" padding= '16px' size={[1,2,3]} bg="#F5F5F5" borderRadius="15px" onClick={executeUserOpAndGasERC20ByUser}> Execute User Operation ( Gas: USDC, Payer: Paymaster )</Button>
                   </Flex>
                 </Box>
             )}
@@ -313,6 +313,3 @@ const App = ()=>{
 }
 
 export default App;
-
-
-
