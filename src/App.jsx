@@ -152,8 +152,8 @@ const App = ()=>{
       setSuccess(true);
       setTx(tx)
     }
-    setSuccess(false);
-    setTx(null);
+    // setSuccess(false);
+    // setTx(null);
     
 
   }
@@ -214,8 +214,8 @@ const App = ()=>{
       setSuccess(true);
       setTx(tx)
     }
-    setSuccess(false);
-    setTx(null);
+    // setSuccess(false);
+    // setTx(null);
   
   }
 
@@ -282,8 +282,8 @@ const App = ()=>{
       setSuccess(true);
       setTx(tx)
     }
-    setSuccess(false);
-    setTx(null);
+    // setSuccess(false);
+    // setTx(null);
   }
 
   return (
