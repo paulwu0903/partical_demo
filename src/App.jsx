@@ -4,7 +4,22 @@ import {ParticleProvider} from '@particle-network/provider';
 import { PolygonMumbai } from '@particle-network/chains';
 import {AAWrapProvider, SmartAccount, SendTransactionMode} from '@particle-network/aa';
 import {ethers} from 'ethers';
-import { Flex, Image, Text, Button, Center, Box, Stack/*, Alert, AlertIcon, AlertDescription, AlertTitle*/} from '@chakra-ui/react'
+import { 
+  Flex, 
+  Image, 
+  Text, 
+  Button, 
+  Center, 
+  Box, 
+  Stack,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+} from '@chakra-ui/react'
 import {RiTwitterXLine} from 'react-icons/ri';
 import {FaGoogle} from 'react-icons/fa';
 
@@ -52,7 +67,8 @@ const App = ()=>{
   const [ethBalance, setEthBalance] = useState();
   // const [status, setStatus] = useState(null);
   // const [userOpHash, setUserOpHash] = useState(null);
-  // const [txHash, setTxHash] = useState(null);
+  const [tx, setTx] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() =>{
     if (userInfo){
@@ -131,6 +147,15 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
+
+    if (txHash){
+      setSuccess(true);
+      setTx(tx)
+    }
+    setSuccess(false);
+    setTx(null);
+    
+
   }
 
   const executeUserOpAndGasNativeByPaymaster = async ()=>{
@@ -184,6 +209,13 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp: gaslessUserOp, userOpHash: gaslessUserOpHash});
     console.log('Transaction hash: ', txHash);
+
+    if (txHash){
+      setSuccess(true);
+      setTx(tx)
+    }
+    setSuccess(false);
+    setTx(null);
   
   }
 
@@ -246,17 +278,34 @@ const App = ()=>{
 
     const txHash = await smartAccount.sendUserOperation({userOp: userOp, userOpHash: userOpHash});
     console.log('Transaction hash: ', txHash);
-    
-    //await updateStatus(txHash, userOpHash)
-
-
-    // const txResponse = await signer.sendTransaction(txs);
-    // const txReceipt = await txResponse.wait();
-    // console.log('Transaction hash: ', txReceipt.transactionHash);
+    if (txHash){
+      setSuccess(true);
+      setTx(tx)
+    }
+    setSuccess(false);
+    setTx(null);
   }
 
   return (
     <Center>
+      {success? (
+          <AlertDialog
+          motionPreset='slideInBottom'
+          isCentered
+        >
+          <AlertDialogOverlay />
+
+          <AlertDialogContent>
+            <AlertDialogHeader>Success</AlertDialogHeader>
+            <AlertDialogCloseButton />
+            <AlertDialogBody>
+              Tx: {tx}
+            </AlertDialogBody>
+          </AlertDialogContent>
+        </AlertDialog>
+      ):(
+        <></>
+      )}
       <Stack>
         <Center>
           <Box>
