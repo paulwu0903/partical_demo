@@ -39,6 +39,7 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
     paymasterApiKeys: [{
       chainId: PolygonMumbai.id,
       apiKey: process.env.REACT_APP_BICONOMY_KEY,
+      
   }]
   }
 });
