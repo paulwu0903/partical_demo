@@ -39,7 +39,7 @@ const smartAccount = new SmartAccount(new ParticleProvider(particle.auth), {
     paymasterApiKeys: [{
       chainId: PolygonMumbai.id,
       apiKey: process.env.REACT_APP_BICONOMY_KEY,
-      
+
   }]
   }
 });
@@ -107,18 +107,8 @@ const App = ()=>{
 
     const amount = ethers.utils.parseUnits(tokenAmount, 18);
 
-    
-
     const txs = 
       [
-      // {
-      // to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      // value : ethers.utils.parseEther('0.001'),
-      // },
-      // {
-      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      //   value : ethers.utils.parseEther('0.002'),
-      // },
       {
         to: tokenAddress,
         data: erc20.interface.encodeFunctionData("mint", [amount]),
@@ -168,14 +158,6 @@ const App = ()=>{
 
     const txs = 
       [
-      // {
-      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      //   value : ethers.utils.parseEther('0.001'),
-      // },
-      // {
-      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      //   value : ethers.utils.parseEther('0.002'),
-      // },
       {
         to: tokenAddress,
         data: erc20.interface.encodeFunctionData("mint", [amount]),
@@ -228,14 +210,6 @@ const App = ()=>{
 
     const txs = 
       [
-      // {
-      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      //   value : ethers.utils.parseEther('0.001'),
-      // },
-      // {
-      //   to: "0xE2c0f71ebe5F5F5E3600CA632b16c5e850183ddf",
-      //   value : ethers.utils.parseEther('0.002'),
-      // },
       {
         to: tokenAddress,
         data: erc20.interface.encodeFunctionData("mint", [amount]),
@@ -257,9 +231,9 @@ const App = ()=>{
     // pay with ERC-20 tokens: fee quotes
     const tokenPaymasterAddress = feeQuotesResult.tokenPaymaster.tokenPaymasterAddress;
     const tokenFeeQuote = feeQuotesResult.tokenPaymaster.feeQuotes[0];
+    console.log('supported tokens : ', feeQuotesResult.tokenPaymaster.feeQuotes);
     
 
-    //console.log(`paymaster: ${nativeFeeQuotes} and ${feeQuotesResult.tokenPaymaster.tokenPaymasterAddress}`);
     const userOpBundle = await smartAccount.buildUserOperation({tx: txs, feeQuote: tokenFeeQuote, tokenPaymasterAddress: tokenPaymasterAddress});
       
     const userOp = userOpBundle.userOp;
